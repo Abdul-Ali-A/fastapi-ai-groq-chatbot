@@ -1,4 +1,5 @@
-<img src="https://github.com/user/repo/raw/main/banner.png" alt="Groq Chatbot Banner" />
+
+![image](https://github.com/user-attachments/assets/00da405b-d659-4568-9106-1c4b430e741a)
 
 <div align="center">
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
@@ -28,7 +29,8 @@
 ### 🚀 Quick Start
 
 ```bash
-git clone https://github.com/yourusername/fastapi-groq-chatbot.git
-cd fastapi-groq-chatbot
+git clone https://github.com/Abdul-Ali-A/fastapi-ai-groq-chatbot.git
+cd fastapi-groq-ai-chatbot
 pip install fastapi uvicorn python-dotenv openai jinja2
 ```
+
