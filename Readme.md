@@ -14,10 +14,6 @@
   <strong>Blazing fast • Stunning dark UI • Keeps last 2 conversations</strong>
 </p>
 
-<p align="center">
-  <img src="https://github.com/user/repo/raw/main/screenshot.png" alt="Chatbot Screenshot" width="800" />
-</p>
-
 ### ✨ Features
 
 - ⚡ Groq-powered (Llama 3.3 70B) — insanely fast responses
@@ -33,4 +29,5 @@ git clone https://github.com/Abdul-Ali-A/fastapi-ai-groq-chatbot.git
 cd fastapi-groq-ai-chatbot
 pip install fastapi uvicorn python-dotenv openai jinja2
 ```
+
 
