@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Groq AI Chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              background: "#000000",
+              surface: "#111111",
+              primary: "#00d4ff",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background: linear-gradient(
+          135deg,
+          #0f0f1e 0%,
+          #1a1a2e 50%,
+          #0f0f1e 100%
+        );
+      }
+      .message-bubble {
+        max-width: 85%;
+        word-wrap: break-word;
+        font-size: 1.05rem;
+        line-height: 1.6;
+      }
+      .user-bubble {
+        background: linear-gradient(135deg, #00d4ff, #0088ff);
+      }
+      .ai-bubble {
+        background: rgba(20, 20, 35, 0.72);
+        border: 1px solid #333344;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col text-white antialiased">
+    <div class="flex-1 flex flex-col w-full">
+      <header
+        class="border-b border-gray-800/40 py-8 text-center bg-surface/30 backdrop-blur-xl"
+      >
+        <h1 class="text-3xl font-light tracking-wider">AI Chatbot</h1>
+        <p class="text-gray-400 mt-3 text-sm">
+          AI Chatbot That Saves Last 2 Conversations
+        </p>
+      </header>
+
+      <div id="messages" class="flex-1 overflow-y-auto px-8 py-10 space-y-8">
+        <div class="flex justify-start">
+          <div
+            class="message-bubble ai-bubble px-8 py-5 rounded-3xl shadow-2xl backdrop-blur-md"
+          >
+            Hello! I'm your AI assistant. Ask me anything.
+          </div>
+        </div>
+      </div>
+
+      <form
+        id="chat-form"
+        class="border-t border-gray-800/40 px-8 py-8 flex gap-5 bg-surface/30 backdrop-blur-xl"
+      >
+        <input
+          type="text"
+          id="input"
+          autocomplete="off"
+          placeholder="Type your message..."
+          class="flex-1 bg-[#1e1e2e]/70 rounded-full px-8 py-6 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary transition backdrop-blur-sm"
+        />
+        <button
+          type="submit"
+          class="bg-primary hover:bg-cyan-400 text-black font-semibold px-12 py-6 rounded-full transition transform hover:scale-105 active:scale-95"
+        >
+          Send
+        </button>
+      </form>
+    </div>
+
+    <script>
+      const form = document.getElementById("chat-form");
+      const input = document.getElementById("input");
+      const messages = document.getElementById("messages");
+
+      function addMessage(text, isUser = false) {
+        const container = document.createElement("div");
+        container.className = isUser
+          ? "flex justify-end"
+          : "flex justify-start";
+
+        const bubble = document.createElement("div");
+        bubble.className = `message-bubble px-8 py-5 rounded-3xl shadow-2xl ${
+          isUser ? "user-bubble text-white" : "ai-bubble backdrop-blur-md"
+        }`;
+        bubble.textContent = text;
+
+        container.appendChild(bubble);
+        messages.appendChild(container);
+        messages.scrollTop = messages.scrollHeight;
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const text = input.value.trim();
+        if (!text) return;
+
+        addMessage(text, true);
+        input.value = "";
+
+        const response = await fetch("/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: text }),
+        });
+
+        const data = await response.json();
+        addMessage(data.reply);
+      });
+    </script>
+  </body>
+</html>
